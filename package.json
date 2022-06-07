@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@prisma/client": "^3.14.0",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.40",
+    "concurrently": "^7.2.1",
+    "express": "^4.18.1",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^2.0.16",
+    "prisma": "^3.14.0"
+  },
+  "name": "board",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "front": "npm run start --prefix front",
+    "back": "nodemon index.js",
+    "dev": "concurrently \"npm run front\" \"npm run back\" "
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
