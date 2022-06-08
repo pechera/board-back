@@ -79,6 +79,44 @@ app.post(`/comment/:id`, async (req, res) => {
   res.json(result);
 });
 
+app.get(`/comment/ref/:id`, async (req, res) => {
+  const { id } = req.params;
+
+  const result = await prisma.Comment.findUnique({
+    where: {
+      id: Number(id),
+    },
+  });
+
+  res.json(result);
+});
+
+app.post(`/comment/ref/:id`, async (req, res) => {
+  const { id } = req.params; // id комментатора
+  const { ids } = req.body;
+
+  // добавить каждому id в refs
+
+  for (let i = 0; i < ids.length; i++) {
+    const str = await prisma.Comment.findUnique({
+      where: {
+        id: Number(ids[i]),
+      },
+    });
+
+    const newId = String(str.ref) + "," + id;
+
+    await prisma.Comment.update({
+      where: {
+        id: Number(ids[i]),
+      },
+      data: {
+        ref: newId,
+      },
+    });
+  }
+});
+
 app.get(`/feed`, async (req, res) => {
   const { search } = req.query;
 
